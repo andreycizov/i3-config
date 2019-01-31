@@ -243,10 +243,15 @@ bar {
 	      tray_padding 0
 }
 
-exec --no-startup-id firefox
-exec --no-startup-id ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox
+exec --no-startup-id xrandr --output DP-2 --pos 3840x0 --output DP-0 --pos 0x0
+exec --no-startup-id xset dpms 0 0 0
 
-exec --no-startup-id quassel
-exec --no-startup-id whatsdesk
-exec --no-startup-id yakyak
-exec --no-startup-id thunderbird
+exec --no-startup-id i3-msg 'workspace 5; exec firefox'
+exec --no-startup-id i3-msg 'workspace 10; exec ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox'
+
+exec --no-startup-id i3-msg  'workspace 1; exec quassel'
+exec --no-startup-id i3-msg  'workspace 1; exec whatsdesk'
+exec --no-startup-id i3-msg  'workspace 1; exec yakyak'
+exec --no-startup-id i3-msg  'workspace 1; exec slack'
+
+exec --no-startup-id i3-msg  'workspace 1; exec thunderbird'
