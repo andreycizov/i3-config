@@ -36,7 +36,7 @@ focus_follows_mouse no
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -46,10 +46,10 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -58,10 +58,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+#bindsym $mod+Shift+j move left
+#bindsym $mod+Shift+k move down
+#bindsym $mod+Shift+l move up
+#bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -188,7 +188,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym XF86_PowerOff exec notify-send "Morbid"
+bindsym XF86Sleep exec notify-send "Sleep"
+bindsym XF86PowerOff exec notify-send "PowerOff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -216,19 +217,23 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+set $mode_system System` (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (w) reboot to win, (Shift+s) shutdown`
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.config/i3/i3exit lock, mode "default"
     bindsym e exec --no-startup-id ~/.config/i3/i3exit logout, mode "default"
     bindsym s exec --no-startup-id ~/.config/i3/i3exit suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/i3/i3exit hibernate, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/i3exit hibernate, mode "default"/custom/bin/reboot-to-win.sh
     bindsym r exec --no-startup-id ~/.config/i3/i3exit reboot, mode "default"
+    bindsym w exec --no-startup-id bash -c "/custom/bin/reboot-to-win.sh && sudo systemctl reboot", mode "default"
     bindsym Shift+s exec --no-startup-id ~/.config/i3/i3exit shutdown, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+bindsym $mod+l exec --no-startup-id ~/.config/i3/i3exit lock, mode "default"
+
 bindsym $mod+Pause mode "$mode_system"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -242,6 +247,10 @@ bar {
 
 	      tray_padding 0
 }
+
+exec --no-startup-id "numlockx on"
+
+exec --no-startup-id bash -c "setxkbmap -layout gb,ru && setxkbmap -option 'grp:win_space_toggle'"
 
 exec --no-startup-id xrandr --output DP-2 --pos 3840x0 --output DP-0 --pos 0x0
 exec --no-startup-id xset dpms 0 0 0
