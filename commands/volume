@@ -1,0 +1,3 @@
+#!/bin/bash
+
+(echo "sink" && pactl subscribe) | grep --line-buffered "sink" | xargs -I '{}' /usr/share/i3blocks/volume
