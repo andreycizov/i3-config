@@ -97,15 +97,15 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 workspace 1 output DP-0
-workspace 2 output DP-2
+workspace 2 output DP-0
 workspace 3 output DP-0
-workspace 4 output DP-2
+workspace 4 output DP-0
 workspace 5 output DP-0
-workspace 6 output DP-2
-workspace 7 output DP-0
-workspace 8 output DP-2
-workspace 9 output DP-0
-workspace 10 output DP-2
+workspace 6 output HDMI-1
+workspace 7 output HDMI-1
+workspace 8 output HDMI-1
+workspace 9 output HDMI-1
+workspace 10 output HDMI-1
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -241,26 +241,40 @@ bindsym $mod+Pause mode "$mode_system"
 bar {
         font pango:Droid Sans Mono, FontAwesome 10
         separator_symbol ">"
-        #
+        
         status_command i3blocks -c /home/andrey/.config/i3/i3blocks.conf
-        tray_output DP-0
+        #tray_output "Screen 0"
 
-	      tray_padding 0
+	tray_padding 0
+	tray_output default
 }
 
 exec --no-startup-id "numlockx on"
 
 exec --no-startup-id bash -c "setxkbmap -layout gb,ru && setxkbmap -option 'grp:win_space_toggle'"
 
-exec --no-startup-id xrandr --output DP-2 --pos 3840x0 --output DP-0 --pos 0x0
+#exec --no-startup-id xrandr --output DP-2 --pos 3840x0 --output DP-0 --pos 0x0
 exec --no-startup-id xset dpms 0 0 0
 
-exec --no-startup-id i3-msg 'workspace 5; exec firefox'
-exec --no-startup-id i3-msg 'workspace 10; exec ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox'
+exec --no-startup-id xsettingsd
 
-exec --no-startup-id i3-msg  'workspace 1; exec quassel'
-exec --no-startup-id i3-msg  'workspace 1; exec whatsdesk'
-exec --no-startup-id i3-msg  'workspace 1; exec yakyak'
-exec --no-startup-id i3-msg  'workspace 1; exec slack'
+exec --no-startup-id i3-msg 'workspace 1; exec firefox'
+#exec --no-startup-id i3-msg 'workspace 10; exec ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox'
 
-exec --no-startup-id i3-msg  'workspace 1; exec thunderbird'
+exec --no-startup-id i3-msg  'workspace 5; exec quassel'
+exec --no-startup-id i3-msg  'workspace 5; exec whatsdesk'
+exec --no-startup-id i3-msg  'workspace 5; exec yakyak'
+exec --no-startup-id i3-msg  'workspace 5; exec slack'
+
+#exec --no-startup-id i3-msg  'workspace 1; exec thunderbird'
+
+
+#assign [class="slack"] 9
+for_window [class="^slack$"] move container to workspace 6
+for_window [class="^Slack$"] move container to workspace 6
+
+#for_window [class="^jetbrains-toolbox$"] move container to workspace 10
+for_window [class="^whatsdesk$"] move container to workspace 5
+for_window [class="^yakyak$"] move container to workspace 5
+#for_window [class="^jetbrains-toolbox$"] move container to workspace 10
+#for_window [class="^$"] move container to workspace 9
