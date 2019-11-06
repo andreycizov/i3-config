@@ -1,0 +1,11 @@
+#!/bin/bash
+
+INTERFACE="${BLOCK_INSTANCE:wlan0}"
+
+A="$(sudo iw dev "$INTERFACE" link)"
+#echo "$A"
+BR=$(grep -Po 'bitrate: \K.+' <(echo "$A"))
+SIGNAL=$(grep -Po 'signal: \K.+' <(echo "$A"))
+
+echo "$BR" "$SIGNAL"
+
