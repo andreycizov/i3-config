@@ -4,7 +4,7 @@
 lock() {
     # [2019-01-31 acizov@gmail.com] only works iff gdm3 is disabled
     xset dpms 0 0 5
-    (i3lock -n -f -c 000000 && xset dpms 0 0 0)
+    (i3lock -n -f -c 000000 && xset dpms 0 0 0) &
 }
 
 case "$1" in
